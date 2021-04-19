@@ -1,0 +1,13 @@
+.header-bar {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    padding: 0 !important;
+}
+.homepage-header-menus {
+    display: flex;
+    justify-content: flex-end;
+}
+.external-link {
+    text-decoration: none !important;
+}

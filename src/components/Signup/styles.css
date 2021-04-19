@@ -1,0 +1,20 @@
+.form-signup {
+    padding: 10px;
+    width: 40%;
+}
+.signup-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 5%;
+}
+.create-button {
+    width: 100%;
+}
+.dob-col {
+display: flex;
+justify-content: flex-end;
+}
+.signup-form-item {
+    display: flex;
+    text-align: end;
+}

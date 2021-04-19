@@ -1,0 +1,367 @@
+.main-card-container {
+    margin: 20px 0;
+}
+.main-card-container .ant-card-body {
+    padding: 0;
+}
+
+/* .post-card .ant-card-actions {
+    display: flex;
+}
+.post-card .ant-card-actions li {
+    margin: 10px 10px;
+    width: auto !important;
+    border: 0;
+} */
+/* .post-options-button {
+    font-size: 30px !important;
+} */
+.post-card .ant-card-actions li .post-share-button {
+    margin-left: auto !important;
+}
+.comments-container {
+    position: relative;
+}
+.comments-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: sticky;
+    top: 64px;
+    z-index: 99;
+    background-color: azure;
+    padding: 0;
+}
+.comments-header-back {
+    font-size: 30px;
+    margin-right: 10px;
+}
+.comments-header-title {
+    font-size: 20px;
+}
+.comments-content {
+    background-color: white;
+}
+.comments-lists {
+    list-style-type: none;
+}
+/* .post-describe p {
+    padding-left: 15px;
+} */
+.post-sidebar-title {
+    color: white !important;
+    text-align: center;
+}
+.post-menu-sidebar {
+    background-color: white;
+    height: 100%;
+}
+.post-list-container {
+    /* overflow: scroll; */
+    height: 100%;
+}
+
+/* LeftSidebar Styles */
+.profile-card-container {
+    padding: 0 15px;
+}
+.profile-card {
+    box-shadow: -1px 1px 6px 1px #888888;
+    margin-top: 15px !important;
+}
+.profile-detail-card p{
+    display: flex;
+    justify-content: center;
+    margin: 0;
+}
+.profile-card .ant-card-body{
+    padding: 10px !important;
+}
+.suggested-card {
+    box-shadow: -1px 1px 6px 1px #888888;
+    margin-top: 25px !important;
+}
+.suggested-card .ant-card-head{
+    min-height: auto;
+    background-color: red;
+    text-align: center;
+    padding: 0 !important;
+}
+.suggested-card .ant-card-head-title {
+    font-weight: bold;
+    font-size: 12px;
+    color: white;
+    padding: 0 !important;
+}
+.suggested-card .ant-card-body{
+    padding: 0 !important;
+}
+.suggested-card-row {
+    padding: 8px;
+}
+.suggested-card-member-name {
+    margin: 0 !important;
+    font-weight: bold;
+    font-size: 12px;
+}
+.suggested-card-member-designation {
+    margin: 0 !important;
+    font-size: 10px;
+}
+.suggested-card-member-company {
+    margin: 0 !important;
+    font-weight: bold;
+    font-size: 10px;
+}
+.view-more-link-div {
+    text-align: center;
+}
+.view-more-link {
+    color: red;
+    font-size: 12px;
+}
+.upcoming-event-card {
+    box-shadow: -1px 1px 6px 1px #888888;
+    margin-top: 25px !important;
+}
+.upcoming-event-card .ant-card-head{
+    min-height: auto;
+    background-color: red;
+    text-align: center;
+    padding: 0 !important;
+}
+.upcoming-event-card .ant-card-head-title {
+    font-weight: bold;
+    font-size: 12px;
+    color: white;
+    padding: 0 !important;
+}
+.upcoming-event-card .ant-card-body{
+    padding: 10px;
+}
+.upcoming-event-name {
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0;
+}
+.upcoming-event-date {
+    font-size: 10px;
+    font-weight: lighter    ;
+    margin: 0;
+}
+
+/* RightSidebar Styles */
+.right-sidebar-container {
+    padding: 0 12px;
+}
+.brand-card {
+    box-shadow: -1px 1px 6px 1px #888888;
+    margin-top: 15px !important;
+}
+.brand-card .ant-card-body {
+    padding: 10px 15px;
+}
+.brand-details {
+    color: red;
+    font-size: 10px;
+    margin: 0;
+}
+.brand-details-div {
+    text-align: center;
+}
+.announcements-card {
+    box-shadow: -1px 1px 6px 1px #888888;
+    margin-top: 25px !important;
+}
+.announcements-card .ant-card-head{
+    min-height: auto;
+    background-color: red;
+    text-align: center;
+    padding: 0 !important;
+}
+.announcements-card .ant-card-head-title {
+    font-weight: bold;
+    font-size: 12px;
+    color: white;
+    padding: 0 !important;
+}
+.announcements-card .ant-card-body{
+    padding: 0 !important;
+}
+.announcement-detail-div {
+    padding: 5px 10px;
+}
+.announcement-detail-title {
+    margin: 0;
+    font-size: 12px;
+    font-weight: bold;
+}
+.announcement-detail-desc {
+    margin: 0;
+    font-size: 10px;
+}
+.announcement-detail-date {
+    margin: 0;
+    font-size: 10px;
+    font-weight: bold;
+}
+.mygroup-list-card {
+    box-shadow: -1px 1px 6px 1px #888888;
+    margin-top: 25px !important;
+}
+.mygroup-list-card .ant-card-head{
+    min-height: auto;
+    background-color: red;
+    text-align: center;
+    padding: 0 !important;
+}
+.mygroup-list-card .ant-card-head-title {
+    font-weight: bold;
+    font-size: 12px;
+    color: white;
+    padding: 0 !important;
+}
+.mygroup-list-card .ant-card-body{
+    padding: 0 !important;
+}
+.mygroup-list-card .ant-card-actions li{
+    border: 0 !important;
+}
+.mygroup-action-button {
+    font-weight: bold !important;
+    color: white !important;
+    font-size: 12px !important;
+    background-color: red !important;
+}
+.mygroup-card-row {
+    padding: 8px;
+}
+.mygroup-name {
+    margin: 0 !important;
+    font-weight: bold;
+    font-size: 12px;
+}
+.mygroup-lastAction {
+    margin: 0 !important;
+    font-size: 10px;
+}
+
+/* CENTER HOMEPAGE POST */
+.center-homepage-post-layout {
+    padding: 0 15px;
+}
+.search-homepage-container {
+    border-radius: 15px;
+    box-shadow: -1px 1px 6px 1px #888888;
+    margin-top: 15px !important;
+}
+.create-post-div-container {
+    margin-top: 25px;
+    box-shadow: -1px 1px 6px 1px #888888;
+    padding: 10px;
+}
+.create-post-form-div {
+    display: flex;
+    background-color: white;
+}
+.create-post-input-field {
+    width: 70% !important;
+}
+.create-post-form-icons {
+    margin: 0 15px;
+    height: 100%;
+    font-size: 25px;
+}
+.main-post-card-container {
+    margin-top: 25px;
+    box-shadow: -1px 1px 6px 1px #888888;
+}
+.main-post-card-container .ant-card-body {
+    padding: 0;
+}
+.main-post-card-container .ant-card-head {
+    padding-left: 10px;
+}
+.post-item-action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.post-options-button {
+    font-size: 18px !important;
+}
+.post-item-actions-span {
+    margin-left: 5px;
+    font-weight: bold;
+    font-size: 15px !important;
+}
+.post-card .ant-card-actions {
+    border-top: 1px solid blue;
+}
+.post-comment-profile {
+    display: flex !important;
+    justify-content: center;
+}
+.post-comment-content {
+    padding-right: 20px;
+}
+.post-comment-content-div {
+    border-radius: 10px;
+    padding: 5px 10px;
+    background-color: #e7e7e7;
+}
+.post-comment-text {
+    margin-bottom: 0;
+}
+.post-comment-username {
+    margin-bottom: 0;
+}
+.post-comments-sub-actions span {
+    font-weight: bold;
+    font-size: 13px;
+    margin: 2px 5px !important;
+}
+.post-comment-time {
+    float: right;
+}
+.post-card .ant-card-actions li {
+    border: 0 !important;
+}
+.post-sub-comment-container {
+    margin: 5px 0;
+}
+.post-member-details-header {
+    display: flex;
+}
+.post-member-detail-username{
+    font-size: 10px;
+    font-weight: bold;
+    margin: 0;
+}
+.post-member-detail-desc{
+    font-size: 10px;
+    margin: 0;
+}
+.post-member-detail-time{
+    font-size: 9px;
+    margin: 0;
+}
+.post-member-detail-profile {
+    align-self: center;
+    margin: 0 5px;
+}
+.post-search-input-field {
+    border-radius: 15px !important;
+}
+.post-card { 
+    width: 100%;
+    height: auto;
+    /* margin: 20px 0; */
+}
+.post-card .ant-card-body {
+    padding: 0;
+}
+.post-card .ant-card-body p{
+    margin: 0;
+    padding: 5px 10px;
+}
