@@ -1,12 +1,24 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
+import InfiniteScroll from 'react-infinite-scroll-component';
 import { HomepagePosts } from "../../constants";
+import SinglePostCard from "./SinglePostCard";
+
 
 import "./styles.css";
-import { Button, Card, Col, Form, Input, Row } from "antd"
+import { Button, Card, Col, Form, Input, Row, Select } from "antd"
 import { CameraOutlined, CommentOutlined, FileTextOutlined, FormOutlined, HeartOutlined, SearchOutlined, ShareAltOutlined, VideoCameraOutlined } from "@ant-design/icons";
 import Avatar from "antd/lib/avatar/avatar";
+const { Option } = Select;
 
-const PostsContents = () => {
+interface Props {
+    setShowCreatePost: Dispatch<SetStateAction<boolean>>,
+    homepagePostsData: [],
+    fetchHomepageDatas: any,
+    hasMorePage: boolean,
+}
+const PostsContents = ({ setShowCreatePost, homepagePostsData, fetchHomepageDatas, hasMorePage }: Props) => {
+    console.log('Homepage post -----', homepagePostsData);
+
     const [postData, setPostData] = useState({
         username: 'Jon Snow',
         designation: 'VP Marketing at American Institude',
@@ -43,7 +55,7 @@ const PostsContents = () => {
             </div>
             <div className="create-post-div-container">
                 <Form className="create-post-form-div">
-                    <FormOutlined className="create-post-form-icons" />
+                    <FormOutlined className="create-post-form-icons" onClick={() => setShowCreatePost(true)} />
                     <Input
                         className="create-post-input-field"
                         type="text"
@@ -53,81 +65,31 @@ const PostsContents = () => {
                     <FileTextOutlined className="create-post-form-icons" />
                 </Form>
             </div>
-            <div className="main-post-card-container">
-                <Card className="">
-                    <Card
-                        title={
-                            (
-                                <div className="post-member-details-header">
-                                    <div className="post-member-detail-profile">
-                                        <Avatar  src={postData.postUserProfile} alt="" />
-                                    </div>
-                                    <div >
-                                        <p className="post-member-detail-username">{postData.username}</p>
-                                        <p className="post-member-detail-desc">{postData.designation} - Member</p>
-                                        <p className="post-member-detail-time">{postData.postTime}</p>
-                                    </div>
-                                </div>
-                            )
-                        }
-                        className="post-card"
-                        actions={[
-                            <div className="post-item-action">
-                                <CommentOutlined className="post-options-button" key="comment" />
-                                <span className="post-item-actions-span">Comment</span>
-                            </div>,
-                            <div className="post-item-action">
-                                <HeartOutlined className="post-options-button" key="like" />
-                                <span className="post-item-actions-span">Like</span>
-                            </div>,
-                            <div className="post-item-action">
-                                <ShareAltOutlined className="post-options-button" key="share" />
-                                <span className="post-item-actions-span">Share</span>
-                            </div>,
-                        ]}>
-                        <>
-                            <img alt='' src={postData.postImages} width='100%' height='auto' />
-                            <p>{postData.postText}</p>
-                            <p>{postData.comments} comments - {postData.likes} likes</p>
-                        </>
-                    </Card>
-                    <Row className="">
-                        <Col span={2} className="post-comment-profile">
-                            <Avatar src={commentsData.profileImage} alt="" />
-                        </Col>
-                        <Col span={22} className="post-comment-content">
-                            <div className="post-comment-content-div">
-                                <span className="post-comment-time ">{commentsData.time}</span>
-                                <p className="post-comment-username">{commentsData.username}- Member</p>
-                                <p className="post-comment-desc">{commentsData.designation}</p>
-                                <p className="post-comment-text">{commentsData.commentText}</p>
-                            </div>
-                            <div className="post-comments-sub-actions">
-                                <span>Like</span>
-                                <span>Reply</span>
-                                <span>{commentsData.time}</span>
-                            </div>
-                            <Row className="post-sub-comment-container">
-                                <Col span={2} className="post-comment-profile">
-                                    <Avatar src={subCommentsData.profileImage} alt="" />
-                                </Col>
-                                <Col span={22}>
-                                    <div className="post-comment-content-div ">
-                                        <span className="post-comment-time ">{subCommentsData.time}</span>
-                                        <p className="post-comment-username">{subCommentsData.username} - Member</p>
-                                        <p className="post-comment-desc">{subCommentsData.designation}</p>
-                                        <p className="post-comment-text">{subCommentsData.commentText}</p>
-                                    </div>
-                                    <div className="post-comments-sub-actions">
-                                        <span>Like</span>
-                                        <span>Reply</span>
-                                        <span>{subCommentsData.time}</span>
-                                    </div>
-                                </Col>
-                            </Row>
-                        </Col>
-                    </Row>
-                </Card>
+            <div className="center-post-filter-div">
+                <span className="post-filter-label">Sort By:</span>
+                <Select
+                    size="small"
+                    defaultValue="recent"
+                    bordered={false}
+                    className="post-filter-select-options">
+                    <Option value="recent"><span>Recent</span></Option>
+                    <Option value="date"><span>Date</span></Option>
+                    <Option value="name"><span>Name</span></Option>
+                </Select>
+            </div>
+            <div className="homepage-post-scrollable" id="homepage-post-list">
+            <InfiniteScroll
+                dataLength={homepagePostsData?.length}
+                next={fetchHomepageDatas}
+                hasMore={hasMorePage}
+                loader="Loading"
+                scrollableTarget="homepage-post-list">
+                {
+                    homepagePostsData && homepagePostsData.map((postData: any) => (
+                        <SinglePostCard postData={postData} />
+                    ))
+                }
+            </InfiniteScroll>
             </div>
         </div>
     )

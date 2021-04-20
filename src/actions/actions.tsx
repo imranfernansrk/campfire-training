@@ -50,6 +50,18 @@ export const postsFetchFailed = (error: any): ActionObject => {
         payload: error
     }
 }
+export const createPostSuccess = (data: any): ActionObject => {
+    return {
+        type: Types.CREATE_POST_SUCCESS,
+        payload: data
+    }
+}
+export const createPostFailed = (error: any): ActionObject => {
+    return {
+        type: Types.CREATE_POST_FAILED,
+        payload: error
+    }
+}
 export const commentsFetchSuccess = (data: any): ActionObject => {
     return {
         type: Types.COMMENTS_FETCH_SUCCESS,
@@ -97,51 +109,39 @@ export const newUserSignData = (userData: SystemAPIModels.Signup) => {
             })
     }
 }
-export const fetchPostDatas = () => {
+export const fetchHomepagePostsData = (nextPage: number) => {
     return async (dispatch: Dispatch<ActionObject>) => {
-        await axios.get(API.POSTS, {
-            headers: { 'Content-Type': 'application/json' }
+        await axios.get(API.GET_HOMEPAGE_POSTS+`/${nextPage}/s/10`, {
+            headers: { 'Content-Type': 'application/json',
+            'token': API.ACCESS_TOKEN,
+            'associationId': API.ASSOCIATE_ID }
         })
             .then(res => {
                 console.log("posts res", res);
                 console.log("posts res data", res.data);
-                // dispatch(postsFetchSuccess(res.data));
+                dispatch(postsFetchSuccess(res.data));
             })
             .catch(err => {
                 console.log("post eror", err)
-                // dispatch(postsFetchFailed(err.response));
+                dispatch(postsFetchFailed(err.response));
             })
     }
 }
-export const fetchPostCommentsDatas = (postId: number) => {
+export const createPost = (data: SystemAPIModels.CreateNewPost) => {
     return async (dispatch: Dispatch<ActionObject>) => {
-        await axios.get(API.SINGLE_POST_COMMENTS + `${postId}`, {
-            headers: { 'Content-Type': 'application/json' }
+        await axios.post(API.CREATE_POST, data, {
+            headers: { 'Content-Type': 'application/json',
+            'token': API.ACCESS_TOKEN,
+            'associationId': API.ASSOCIATE_ID }
         })
             .then(res => {
-                console.log("posts res", res);
-                console.log("posts res data", res.data);
-                // dispatch(postsFetchSuccess(res.data));
+                console.log("CREATE posts res", res);
+                console.log("CREATE posts res data", res.data);
+                dispatch(createPostSuccess(res.data));
             })
             .catch(err => {
-                console.log("post eror", err)
-                // dispatch(postsFetchFailed(err.response));
-            })
-    }
-}
-export const addPostData = (data: any) => {
-    return async (dispatch: Dispatch<ActionObject>) => {
-        await axios.post(API.POSTS, data, {
-            headers: { 'Content-Type': 'application/json' }
-        })
-            .then(res => {
-                console.log("add posts res", res);
-                console.log("add posts res data", res.data);
-                // dispatch(postsFetchSuccess(res.data));
-            })
-            .catch(err => {
-                console.log("add post eror", err)
-                // dispatch(postsFetchFailed(err.response));
+                console.log("CREATE post eror", err)
+                dispatch(createPostFailed(err.response));
             })
     }
 }

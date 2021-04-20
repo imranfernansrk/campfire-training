@@ -1,8 +1,17 @@
 export interface RootState {
     datas: {},
-    posts: [],
+    postsData: {
+        posts: [],
+        pageInfo: {
+        }
+    },
+    createNewPost: {},
     newUser: {},
     postComments: [],
+}
+export interface PostsDataObject {
+    posts: [],
+    pageInfo: {}
 }
 
 export interface Login {
@@ -21,6 +30,15 @@ export interface Signup {
         testid?: string,
         successState?: string,
         profileImage?: string
+}
+export interface CreateNewPost {
+    postText: string,
+    postImages: string[],
+    postAudienceType: number,
+    postAudienceData: string[],
+    postVideos: string[],
+    postFiles: string[],
+    postThumbs: string[],
 }
 
 export namespace RootStateModels {

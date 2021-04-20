@@ -4,7 +4,11 @@ import { Types } from "../actions";
 
 const initialSystemAPIState: SystemAPIModels.RootState = {
     datas: {},
-    posts: [],
+    postsData: {
+        posts: [],
+        pageInfo: {}
+    },
+    createNewPost: {},
     newUser: {},
     postComments: []
 }
@@ -38,14 +42,48 @@ export const systemAPIReducer = (state: SystemAPIModels.RootState = initialSyste
                 datas: action.payload,
             }
         case Types.POSTS_FETCH_SUCCESS:
+            let pageInfo = {
+                current: action.payload.current,
+                prev: action.payload.prev,
+                next: action.payload.next,
+                pages: action.payload.pages,
+                total: action.payload.total,
+            };
+            let newListPosts: [] = action.payload.posts;
+            if(action.payload.current == 1){
+                return {
+                    ...state,
+                    postsData: {
+                        pageInfo: pageInfo,
+                        posts: newListPosts
+                    }
+                }
+            }else{
             return {
                 ...state,
-                posts: action.payload,
+                postsData: {
+                    pageInfo: pageInfo,
+                    posts: [...state.postsData.posts, ...newListPosts]
+                }
             }
+        }
         case Types.POSTS_FETCH_FAILED:
             return {
                 ...state,
-                posts: [],
+                postsData: {
+                    pageInfo: {},
+                    posts: []
+                },
+            }
+        case Types.CREATE_POST_SUCCESS:
+            return {
+                ...state,
+                createNewPost: action.payload,
+            }
+        case Types.CREATE_POST_FAILED:
+            return {
+                ...state,
+                createNewPost: {},
             }
         case Types.COMMENTS_FETCH_SUCCESS:
             return {

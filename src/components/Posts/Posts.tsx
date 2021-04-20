@@ -1,7 +1,7 @@
 import React, { Dispatch, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
-import { fetchPostDatas, addPostData } from "../../actions";
+import { fetchHomepagePostsData, createPost } from "../../actions";
 import PostsContent from "./PostsContent";
 import LeftSidebar from "./LeftSidebar";
 import RightSidebar from "./RightSidebar";
@@ -10,53 +10,51 @@ import { SystemAPIModels } from "../../models";
 import "./styles.css";
 import { Row, Col } from "antd"
 import Title from "antd/lib/typography/Title";
+import CreatePostModal from "./CreatePostModal";
 
 
 const Posts = () => {
     const actionDispatch = useDispatch<Dispatch<any>>();
-    const postsData: [] | any = useSelector<SystemAPIModels.RootState>(state => state.posts);
-    const [showComments, setShowComments] = useState<boolean>(false);
-    const [postObject, setPostObject] = useState({
-        id: "",
-        title: ""
-    });
+    const homepagePostsData: SystemAPIModels.PostsDataObject | any = useSelector<SystemAPIModels.RootState>(state => state);
+    const [ showCreatePost, setShowCreatePost] = useState<boolean>(false);
+    const [hasMorePage, setHasMorePage] = useState<boolean>(true);
+    const [currentPage, setCurrentPage] = useState<number>(1);
 
     useEffect(() => {
-        actionDispatch(fetchPostDatas());
-    }, [])
-    const onChangeEvent = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const fieldName = e.target.name;
-        setPostObject({ ...postObject, [fieldName]: e.target.value });
+        actionDispatch(fetchHomepagePostsData(currentPage));
+        console.log('useEffect',homepagePostsData.postsData.posts); 
+    }, []);
+    const fetchHomepageDatas = () => {
+        setCurrentPage(homepagePostsData.postsData.pageInfo.current);
+        if(homepagePostsData.postsData && homepagePostsData.postsData.pageInfo.next){
+            // setCurrentPage(homepagePostsData.postsData.pageInfo.current + 1);
+            actionDispatch(fetchHomepagePostsData(currentPage + 1));
+            console.log('scrollFetching......')
+        }else{
+            setHasMorePage(false)
+            return;
+        }
     }
-    const onSubmitEvent = (e: React.FormEvent<HTMLFormElement | HTMLButtonElement>) => {
-        e.preventDefault();
-        actionDispatch(addPostData(postObject));
-    }
-    const onCardChange = (e: string) => {
-        console.log("Tabs", e)
-    }
-    const onSelectComments = (postId: number) => {
-        sessionStorage.setItem('postId', postId.toString());
-        setShowComments(true);
-    }
-    if (showComments) {
-        return (<Redirect to="/comments" />)
-    }
-    const height = window.innerHeight + 'px';
+    const height = window.screen.availHeight + 'px';
 
     return (
         <div>
-            <Row className="post-menu-sidebar">
+            <Row style={{height:height}} className="post-menu-sidebar">
                 <Col span={4}>
                     <LeftSidebar />
                 </Col>
-                <Col span={15}>
-                    <PostsContent />
+                <Col span={15} className="center-col-post-content">
+                    <PostsContent
+                    setShowCreatePost={setShowCreatePost}
+                    homepagePostsData={homepagePostsData.postsData.posts}
+                    fetchHomepageDatas={fetchHomepageDatas}
+                    hasMorePage={hasMorePage}/>
                 </Col>
                 <Col span={5}>
                     <RightSidebar />
                 </Col>
             </Row>
+            <CreatePostModal setCurrentPage={setCurrentPage} showCreatePost={showCreatePost} setShowCreatePost={setShowCreatePost} />
         </div>
     )
 

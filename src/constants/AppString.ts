@@ -71,15 +71,20 @@ export const SignupString = {
     EMPLOYEE_FORM_NAME: "employee_register",
 }
 // export const BASE_URL = "https://crs-portal-api.code-ps.com/api/v1";
-export const BASE_URL = "https://us-central1-warfy-dev.cloudfunctions.net/WarfyAPP"
+// export const BASE_URL = "https://us-central1-warfy-dev.cloudfunctions.net/WarfyAPP"
+export const BASE_URL = "https://campfire-dev.inv8.com:5000"
 export const PROXY = "http://localhost:8080/"; 
 export const GITHUB_BASE_URL = "https://my-json-server.typicode.com/imranfernansrk/priv"
 export const API = {
+    ACCESS_TOKEN: 'v8TEdnGdPAq7i1nc',
+    ASSOCIATE_ID: '5fca3e8ee9db814257cf5dca',
+    GET_HOMEPAGE_POSTS: BASE_URL + '/webservices/homePosts',
+    CREATE_POST: BASE_URL + '/webservices/createPost',
     SIGN_UP: PROXY + BASE_URL + "/UserSignUp",
     SIGN_IN: PROXY + BASE_URL + "/UserSignIn",
-    POSTS: GITHUB_BASE_URL + "/posts",
-    COMMENTS: GITHUB_BASE_URL + "/comments",
-    SINGLE_POST_COMMENTS : GITHUB_BASE_URL + "/comments?postId=",
+    // POSTS: GITHUB_BASE_URL + "/posts",
+    // COMMENTS: GITHUB_BASE_URL + "/comments",
+    // SINGLE_POST_COMMENTS : GITHUB_BASE_URL + "/comments?postId=",
     // LOGIN: BASE_URL + "/users/login",
-    COMPANIES: BASE_URL + "/companies/"
+    // COMPANIES: BASE_URL + "/companies/"
 }
