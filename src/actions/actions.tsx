@@ -62,6 +62,12 @@ export const createPostFailed = (error: any): ActionObject => {
         payload: error
     }
 }
+export const clearCreatePostObject = (): ActionObject => {
+    return {
+        type: Types.CLEAR_CREATE_POST_OBJECT,
+        payload: {}
+    }
+}
 export const commentsFetchSuccess = (data: any): ActionObject => {
     return {
         type: Types.COMMENTS_FETCH_SUCCESS,
@@ -131,7 +137,7 @@ export const createPost = (data: SystemAPIModels.CreateNewPost) => {
     return async (dispatch: Dispatch<ActionObject>) => {
         await axios.post(API.CREATE_POST, data, {
             headers: { 'Content-Type': 'application/json',
-            'token': API.ACCESS_TOKEN,
+            'token': 'API.ACCESS_TOKEN',
             'associationId': API.ASSOCIATE_ID }
         })
             .then(res => {

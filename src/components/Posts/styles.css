@@ -272,6 +272,12 @@
     overflow-y: scroll;
     height: 77%;
 }
+.loading-homepage-post {
+    display: flex !important;
+    justify-content: center !important;
+    font-size: 30px;
+    overflow: hidden !important;
+}
 .search-homepage-container {
     border-radius: 15px;
     box-shadow: -1px 1px 6px 1px #888888;

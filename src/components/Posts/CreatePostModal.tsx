@@ -1,12 +1,14 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
-import { createPost } from "../../actions";
+import React, { Dispatch, SetStateAction, useState, useEffect } from "react";
+import { createPost, fetchHomepagePostsData } from "../../actions";
 
-import { Modal, Button, Avatar, Input, Select, Upload } from "antd";
+import { Modal, Button, Avatar, Input, Select, Upload, notification } from "antd";
 import { UploadChangeParam } from "antd/lib/upload";
 import { UploadFile } from "antd/lib/upload/interface";
 import { SystemAPIModels } from "../../models";
-import { useDispatch } from "react-redux";
-import Form from "antd/lib/form/Form";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { API } from "../../constants";
+
 const { Option } = Select;
 
 interface Props {
@@ -17,8 +19,8 @@ interface Props {
 
 const CreatePostModal = ({ setCurrentPage, showCreatePost, setShowCreatePost }: Props) => {
     const actionDispatch = useDispatch<Dispatch<any>>();
-    const [postImages, setPostImages] = useState<any>();
-    console.log(postImages)
+    const createNewPost: SystemAPIModels.PostsDataObject | any = useSelector<SystemAPIModels.RootState>(state => state.createNewPost);
+    const [firstPage, setFirstPage] = useState<number>(1);
     const [createPostObject, setCreatePostObject] = useState<SystemAPIModels.CreateNewPost>({
         postText: '',
         postImages: [],
@@ -28,6 +30,45 @@ const CreatePostModal = ({ setCurrentPage, showCreatePost, setShowCreatePost }: 
         postFiles: [],
         postThumbs: [],
     })
+    // useEffect(() => {
+    //     if(createNewPost != {} && createNewPost.status == 200){
+    //         successNotification(createNewPost.message)
+    //         actionDispatch(fetchHomepagePostsData(firstPage));
+    //         setShowCreatePost(false);
+    //         clearCreateNewPost()
+    //     }else if(createNewPost != {} && createNewPost.status != 200){
+    //         errorNotification(createNewPost.message)
+    //         clearCreateNewPost();
+    //     }
+    // }, [createNewPost]);
+    const clearCreateNewPost = () => {
+        setCreatePostObject({
+            postText: '',
+            postImages: [],
+            postAudienceType: 1,
+            postAudienceData: [],
+            postVideos: [],
+            postFiles: [],
+            postThumbs: [],
+        });
+        actionDispatch(fetchHomepagePostsData(firstPage));
+    }
+    const successNotification = (message: string) => {
+        notification.config({
+            placement: 'topLeft'
+        });
+        notification['success']({
+            message: message,
+        });
+    }
+    const errorNotification = (message: string) => {
+        notification.config({
+            placement: 'topLeft'
+        });
+        notification['error']({
+            message: message,
+        });
+    }
     const onChangeGenderEvent = (value: number) => {
         setCreatePostObject({ ...createPostObject, ['postAudienceType']: value });
     }
@@ -37,17 +78,38 @@ const CreatePostModal = ({ setCurrentPage, showCreatePost, setShowCreatePost }: 
     }
     const onChangeImage = (e: UploadChangeParam<UploadFile<any>>) => {
         console.log(e.fileList)
-        let thumbArr = e.fileList.map((file: any) => file.thumbUrl);
+        let thumbArr: string[] | undefined = [];
+        for (let index = 0; index < e.fileList.length; index++) {
+            const element = e.fileList[index].thumbUrl;
+            if (element != undefined) {
+                thumbArr.push(element);
+            }
+        }
+        // let thumbArr = e.fileList.map((file: UploadFile) => console.log(file.thumbUrl));
         console.log(thumbArr)
-        if (e.fileList[0].thumbUrl != undefined) {
+        if (thumbArr != undefined) {
             setCreatePostObject({ ...createPostObject, ["postThumbs"]: [...thumbArr] });
         }
     }
-    const onSubmitPostForm = () => {
+    const onSubmitPostForm = async () => {
         console.log(createPostObject)
-        actionDispatch(createPost(createPostObject));
-        // setCurrentPage(1);
-        setShowCreatePost(false);
+        // actionDispatch(createPost(createPostObject));
+        // setShowCreatePost(false);
+        const createdPostObject = await axios.post(API.CREATE_POST, createPostObject, {
+            headers: {
+                'Content-Type': 'application/json',
+                'token': API.ACCESS_TOKEN,
+                'associationId': API.ASSOCIATE_ID
+            }
+        })
+        console.log(createdPostObject);
+        if (createdPostObject.data != {} && createdPostObject.data.status == 200) {
+            successNotification(createdPostObject.data.message)
+            clearCreateNewPost()
+            setShowCreatePost(false);
+        } else if (createdPostObject.data != {} && createdPostObject.data.status != 200) {
+            errorNotification(createdPostObject.data.message)
+        }
     }
     const [postUserDetail, setPostUserDetail] = useState({
         profileImage: 'https://cdn.pixabay.com/photo/2018/08/28/12/41/avatar-3637425__340.png',
@@ -104,21 +166,32 @@ const CreatePostModal = ({ setCurrentPage, showCreatePost, setShowCreatePost }: 
                 </div>
                 <div className="create-post-add-buttons">
                     <Upload
-                        // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                         listType="picture"
                         // defaultFileList={[...postImages]}
                         onChange={(e) => onChangeImage(e)}
                         showUploadList={true}
-                        className="upload-list-inline"
-                    >
+                        className="upload-list-inline">
                         <Button className="create-post-action-button">Add Photos</Button>
                     </Upload>
-                    
-                    {/* <Input className="btn btn-primary" type="file"/> */}
-                    
-                    {/* <Input type="file" onChange={(e) => onChangeImage(e)} className="create-post-action-button" /> */}
+                    <Upload
+                        listType="picture"
+                        // defaultFileList={[...postImages]}
+                        onChange={(e) => onChangeImage(e)}
+                        showUploadList={true}
+                        className="upload-list-inline">
+                        <Button className="create-post-action-button">Add Videos</Button>
+                    </Upload>
+                    <Upload
+                        listType="picture"
+                        // defaultFileList={[...postImages]}
+                        onChange={(e) => onChangeImage(e)}
+                        showUploadList={true}
+                        className="upload-list-inline">
+                        <Button className="create-post-action-button">Add Documents</Button>
+                    </Upload>
+                    {/* <Button className="create-post-action-button">Add Photos</Button>           
                     <Button className="create-post-action-button">Add Videos</Button>
-                    <Button className="create-post-action-button">Add Documents</Button>
+                    <Button className="create-post-action-button">Add Documents</Button> */}
                 </div>
                 <div className="create-post-privacy-option-div">
                     <label className="create-post-select-label">

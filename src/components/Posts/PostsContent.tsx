@@ -6,7 +6,7 @@ import SinglePostCard from "./SinglePostCard";
 
 import "./styles.css";
 import { Button, Card, Col, Form, Input, Row, Select } from "antd"
-import { CameraOutlined, CommentOutlined, FileTextOutlined, FormOutlined, HeartOutlined, SearchOutlined, ShareAltOutlined, VideoCameraOutlined } from "@ant-design/icons";
+import { CameraOutlined, CommentOutlined, FileTextOutlined, FormOutlined, HeartOutlined, LoadingOutlined, SearchOutlined, ShareAltOutlined, VideoCameraOutlined } from "@ant-design/icons";
 import Avatar from "antd/lib/avatar/avatar";
 const { Option } = Select;
 
@@ -82,7 +82,7 @@ const PostsContents = ({ setShowCreatePost, homepagePostsData, fetchHomepageData
                 dataLength={homepagePostsData?.length}
                 next={fetchHomepageDatas}
                 hasMore={hasMorePage}
-                loader="Loading"
+                loader={<LoadingOutlined className="loading-homepage-post"/>}
                 scrollableTarget="homepage-post-list">
                 {
                     homepagePostsData && homepagePostsData.map((postData: any) => (

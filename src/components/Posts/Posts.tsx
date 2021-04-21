@@ -11,24 +11,25 @@ import "./styles.css";
 import { Row, Col } from "antd"
 import Title from "antd/lib/typography/Title";
 import CreatePostModal from "./CreatePostModal";
+import { useCallback } from "react";
 
 
 const Posts = () => {
     const actionDispatch = useDispatch<Dispatch<any>>();
-    const homepagePostsData: SystemAPIModels.PostsDataObject | any = useSelector<SystemAPIModels.RootState>(state => state);
+    const homepagePostsData: SystemAPIModels.PostsDataObject | any = useSelector<SystemAPIModels.RootState>(state => state.postsData);
     const [ showCreatePost, setShowCreatePost] = useState<boolean>(false);
     const [hasMorePage, setHasMorePage] = useState<boolean>(true);
     const [currentPage, setCurrentPage] = useState<number>(1);
 
     useEffect(() => {
         actionDispatch(fetchHomepagePostsData(currentPage));
-        console.log('useEffect',homepagePostsData.postsData.posts); 
-    }, []);
+        console.log('useEffect',homepagePostsData.posts); 
+    }, [currentPage]);
     const fetchHomepageDatas = () => {
-        setCurrentPage(homepagePostsData.postsData.pageInfo.current);
-        if(homepagePostsData.postsData && homepagePostsData.postsData.pageInfo.next){
-            // setCurrentPage(homepagePostsData.postsData.pageInfo.current + 1);
-            actionDispatch(fetchHomepagePostsData(currentPage + 1));
+        // setCurrentPage(homepagePostsData.postsData.pageInfo.current);
+        if(homepagePostsData && homepagePostsData.pageInfo.next){
+            setCurrentPage(homepagePostsData.pageInfo.current + 1);
+            // actionDispatch(fetchHomepagePostsData(currentPage + 1));
             console.log('scrollFetching......')
         }else{
             setHasMorePage(false)
@@ -46,7 +47,7 @@ const Posts = () => {
                 <Col span={15} className="center-col-post-content">
                     <PostsContent
                     setShowCreatePost={setShowCreatePost}
-                    homepagePostsData={homepagePostsData.postsData.posts}
+                    homepagePostsData={homepagePostsData.posts}
                     fetchHomepageDatas={fetchHomepageDatas}
                     hasMorePage={hasMorePage}/>
                 </Col>

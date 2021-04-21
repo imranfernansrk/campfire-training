@@ -50,7 +50,7 @@ export const systemAPIReducer = (state: SystemAPIModels.RootState = initialSyste
                 total: action.payload.total,
             };
             let newListPosts: [] = action.payload.posts;
-            if(action.payload.current == 1){
+            if (action.payload.current == 1) {
                 return {
                     ...state,
                     postsData: {
@@ -58,15 +58,15 @@ export const systemAPIReducer = (state: SystemAPIModels.RootState = initialSyste
                         posts: newListPosts
                     }
                 }
-            }else{
-            return {
-                ...state,
-                postsData: {
-                    pageInfo: pageInfo,
-                    posts: [...state.postsData.posts, ...newListPosts]
+            } else {
+                return {
+                    ...state,
+                    postsData: {
+                        pageInfo: pageInfo,
+                        posts: [...state.postsData.posts, ...newListPosts]
+                    }
                 }
             }
-        }
         case Types.POSTS_FETCH_FAILED:
             return {
                 ...state,
@@ -83,7 +83,12 @@ export const systemAPIReducer = (state: SystemAPIModels.RootState = initialSyste
         case Types.CREATE_POST_FAILED:
             return {
                 ...state,
-                createNewPost: {},
+                createNewPost: action.payload,
+            }
+        case Types.CLEAR_CREATE_POST_OBJECT:
+            return {
+                ...state,
+                createNewPost: action.payload,
             }
         case Types.COMMENTS_FETCH_SUCCESS:
             return {
